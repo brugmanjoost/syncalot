@@ -116,7 +116,7 @@ console.log(await syncalot.sync({
     key2: (id, item) => item.identifer.userId - 100
 }).asArray({ commonIdsOnly: true })));
 ```
-The result then simply has the commonIds in arrays.
+The result then simply has the commonIds in arrays:
 ```
 {
   outerLeft: [ 1 ],
@@ -124,6 +124,7 @@ The result then simply has the commonIds in arrays.
   outerRight: [ 3 ]
 }
 ```
+You can also pass commonIdsOnly: true into asMap() which results in a map where each key is the commonId and each value is true.
 <a name="#3.2"></a>
 ## 3.2 Using arrays
 We can also use arrays, for example if the datasets look like this:
