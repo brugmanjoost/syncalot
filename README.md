@@ -10,6 +10,7 @@ or in both.
 3.3 [Using streams](##3.3)<br />
 3.4 [Receiving results through events](##3.4)<br />
 3.5 [Receiving results through callbacks](##3.5)<br />
+3.6 [Selective sync](##3.6)<br />
 4. [Syncalot internals](##4)
 
 <a name="#1"></a>
@@ -219,3 +220,17 @@ await syncalot.sync({
     }
 });
 ```
+<a name="#3.6"></a>
+## 3.6 Selective sync
+The main sync function syncalot.sync() always produces outerLeft, outerRight and inner results. Sometimes that is more than you need. Additionally the following selective syncs are available that all take the exact same options.
+- **syncalot.outerLeft()**: Returns only the leftOuter result. For maps and arrays this eliminates a scan over set2 to find items that are not in set1.
+- **syncalot.outerRight()**: Returns only the rightOuter result. For maps and arrays this eliminates a scan over set1 to find items that are not in set2.
+- **syncalot.inner**(): Returns only the inner result. For maps and arrays this eliminates a scan over set2 to find items that are not in set1.
+- **syncalot.outer()**: Returns only leftOuter and rightOuter. This does not eliminate a scan.
+- **syncalot.innerLeft()**: Returns only inner and outerLeft. This does not eliminate a scan.
+- **syncalot.innerRight()**: Returns only inner and innerRight. This does not eliminate a scan.
+
+<a name ="#4"></a>
+## 4. Internals
+
+
