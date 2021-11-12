@@ -2,6 +2,13 @@
 Syncalot is a nodejs module used to synchronise datasets. Syncalot easily compares arrays, key/value maps and streams with eachother to identify items that exist in either side 
 or in both.
 
+1. [Installation](#introduction)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Errors](#errors)
+5. [API](#api)<br />
+
+
 ## Installation
 
 ```sh
@@ -145,4 +152,40 @@ The result will be equal to that of demo #1.3:
   inner: [ 2 ],
   outerRight: [ 3 ]
 }
+```
+
+## Using streams
+To synchronise streams ensure the streams meet these two requirements:
+- The stream is placed in objectMode
+- The objects in the stream are sorted by the commonId
+If those requirements are met, streams are synchronised in the same way as arrays. All demos are runnable from /examples/examples.js. To demonstrate streams we've added a simple StreamArray that streams items in an array.
+```
+// Demo #3.1
+console.log(await syncalot.sync({
+    set1: new StreamArray(set1a),
+    set2: new StreamArray(set2a),
+    key1: 'id',
+    key2: (id, item) => item.identifer.userId - 100
+}).asMap()));
+```
+
+## Receiving results through events
+You can choose to not accumulate the results and instead have them be emitted as events, like so:
+```
+let eventable = syncalot.sync({
+    set1: data.set1a,
+    set2: data.set2a,
+    key1: 'id',
+    key2: (idx, item) => item.identifer.primaryKey - 100
+}).asEventEmitter();
+eventable.on('outerleft', (idCommon, id1, item1) => {
+    console.log('outerleft', idCommon, id1, item1);
+});
+eventable.on('outerright', (idCommon, id2, item2) => {
+    console.log('outerright', idCommon, id2, item2);
+});
+eventable.on('inner', (idCommon, id1, item1, id2, item2) => {
+    console.log('inner', idCommon, id1, item1, id2, item2);
+});
+await eventable.sync();
 ```
