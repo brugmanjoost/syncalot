@@ -4,12 +4,12 @@ or in both.
 
 1. [Installation](#introduction)
 2. [What you need to know](#installation)
-3. [Examples](#usage)
-3.1 [Synchronising two key/value maps with different types keys and ids](#errors)
-3.2 [Using arrays](#errors)
-3.3 [Using streams](#errors)
-3.4 [Receiving results through events](#errors)
-3.5 [Receiving results through callbacks](#api)
+3. [Examples](#usage)<br />
+3.1 [Synchronising two key/value maps with different types keys and ids](#errors)<br />
+3.2 [Using arrays](#errors)<br />
+3.3 [Using streams](#errors)<br />
+3.4 [Receiving results through events](#errors)<br />
+3.5 [Receiving results through callbacks](#api)<br />
 
 
 ## 1. Installation
