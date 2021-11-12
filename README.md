@@ -10,6 +10,7 @@ or in both.
 3.3 [Using streams](#errors)<br />
 3.4 [Receiving results through events](#errors)<br />
 3.5 [Receiving results through callbacks](#api)<br />
+4. [Syncalot internals](#aa)
 
 
 ## 1. Installation
