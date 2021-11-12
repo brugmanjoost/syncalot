@@ -1,6 +1,6 @@
 # syncalot
 Syncalot is a nodejs module used to synchronise datasets. Syncalot easily compares arrays, key/value maps and streams with eachother to identify items that exist in either side 
-or in both.
+or in both. Syncalot has zero external dependencies.
 
 1. [Installation](##1)
 2. [What you need to know](##2)
