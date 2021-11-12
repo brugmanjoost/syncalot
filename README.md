@@ -173,8 +173,8 @@ console.log(await syncalot.sync({
 You can choose to not accumulate the results and instead have them be emitted as events, like so:
 ```
 let eventable = syncalot.sync({
-    set1: data.set1a,
-    set2: data.set2a,
+    set1: set1a,
+    set2: set2a,
     key1: 'id',
     key2: (idx, item) => item.identifer.primaryKey - 100
 }).asEventEmitter();
@@ -193,8 +193,8 @@ await eventable.sync();
 You can choose to not accumulate the results and instead have them be returned through callbacks, like so:
 ```
 await syncalot.sync({
-    set1: data.set1a,
-    set2: data.set2a,
+    set1: set1a,
+    set2: set2a,
     key1: 'id',
     key2: (idx, item) => item.identifer.primaryKey - 100
 }).asCallbacks({
