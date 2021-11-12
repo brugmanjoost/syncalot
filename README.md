@@ -2,15 +2,15 @@
 Syncalot is a nodejs module used to synchronise datasets. Syncalot easily compares arrays, key/value maps and streams with eachother to identify items that exist in either side 
 or in both.
 
-1. [Installation](#1)
-2. [What you need to know](#2)
-3. [Examples](#3)<br />
-3.1 [Synchronising two key/value maps with different types keys and ids](#3.1)<br />
-3.2 [Using arrays](#3.2)<br />
-3.3 [Using streams](#3.3)<br />
-3.4 [Receiving results through events](#3.4)<br />
-3.5 [Receiving results through callbacks](#3.5)<br />
-4. [Syncalot internals](#4)
+1. [Installation](##1)
+2. [What you need to know](##2)
+3. [Examples](##3)<br />
+3.1 [Synchronising two key/value maps with different types keys and ids](##3.1)<br />
+3.2 [Using arrays](##3.2)<br />
+3.3 [Using streams](##3.3)<br />
+3.4 [Receiving results through events](##3.4)<br />
+3.5 [Receiving results through callbacks](##3.5)<br />
+4. [Syncalot internals](##4)
 
 <a name="#1"></a>
 ## 1. Installation
