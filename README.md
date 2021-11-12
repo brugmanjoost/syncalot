@@ -11,7 +11,10 @@ or in both.
 3.4 [Receiving results through events](##3.4)<br />
 3.5 [Receiving results through callbacks](##3.5)<br />
 3.6 [Selective sync](##3.6)<br />
-4. [Syncalot internals](##4)
+4. [Internals](##4)<br />
+4.1 [Preparation](##4.1)<br />
+4.2 [Actual sync](##4.2)<br />
+4.2 [Results](##4.3)<br />
 
 <a name="#1"></a>
 ## 1. Installation
@@ -232,5 +235,19 @@ The main sync function syncalot.sync() always produces outerLeft, outerRight and
 
 <a name ="#4"></a>
 ## 4. Internals
+Syncalot tries to optimize for speed while conserving memory. While doing so there is a three step process to execute a sync:
+
+<a name ="#4.1"></a>
+## 4.1 Preparation
+
+<a name ="#4.2"></a>
+## 4.2 Actual sync
+
+
+<a name ="#4.3"></a>
+## 4.3 Results
+
+
+
 
 
