@@ -1,0 +1,7 @@
+{
+    "name": "syncalot",
+    "description": "Syncalot is a nodejs module used to synchronise datasets. Syncalot easily compares arrays, key/value maps and streams with eachother to identify items that exist in either side or in both. Syncalot has zero external dependencies.",
+    "version": "1.0.0",
+    "author": "Joost Brugman",
+    "license": "MIT"
+}
