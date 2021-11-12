@@ -189,3 +189,23 @@ eventable.on('inner', (idCommon, id1, item1, id2, item2) => {
 });
 await eventable.sync();
 ```
+## Receiving results through callbacks
+You can choose to not accumulate the results and instead have them be returned through callbacks, like so:
+```
+await syncalot.sync({
+    set1: data.set1a,
+    set2: data.set2a,
+    key1: 'id',
+    key2: (idx, item) => item.identifer.primaryKey - 100
+}).asCallbacks({
+    onOuterLeft: (idCommon, id1, item1) => {
+        console.log('outerleft', idCommon, id1, item1);
+    },
+    onOuterRight: (idCommon, id2, item2) => {
+        console.log('outerright', idCommon, id2, item2);
+    },
+    onInner: (idCommon, id1, item1, id2, item2) => {
+        console.log('inner', idCommon, id1, item1, id2, item2);
+    }
+});
+```
