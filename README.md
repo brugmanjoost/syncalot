@@ -3,18 +3,21 @@ Syncalot is a nodejs module used to synchronise datasets. Syncalot easily compar
 or in both.
 
 1. [Installation](#introduction)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Errors](#errors)
-5. [API](#api)<br />
+2. [What you need to know](#installation)
+3. [Examples](#usage)
+3.1 [Synchronising two key/value maps with different types keys and ids](#errors)
+3.2 [Using arrays](#errors)
+3.3 [Using streams](#errors)
+3.4 [Receiving results through events](#errors)
+3.5 [Receiving results through callbacks](#api)<br />
 
 
-## Installation
+## 1. Installation
 
 ```sh
 $ npm install syncalot
 ```
-## What you need to know
+## 2. What you need to know
 Syncalot always compares two sets: **set1** on the left and **set2** on the right. Each item in each set is assumed to have an **id** that uniquely identifies the item within that set. On top of that you specifiy a **key** to dynamically determine the **commonId** for each **item** in the **set** and perform the synchronisation. If a **commonId** exists in set1 but not in set2, the item from set1 is outputted as **outerLeft**. If a commonId exists in set2 but not in set1, the item from set2 is outputted as **outerRight**. If the commonId exists in both sets then the item is outputted as **inner**.
 
 A key is any one of these three things:
@@ -28,10 +31,10 @@ A key is any one of these three things:
 
 **For streams:** The id for an item is always the index of the item as it came through the stream. A key is mandatory.
 
-# Examples
+# 3. Examples
 You can find an extensive list of samples in /examples. Following is a subset of those examples.
 
-## Synchronising two key/value maps with different types keys and ids.
+## 3.1 Synchronising two key/value maps with different types keys and ids
 Consider the following scenario with two key/valyue maps set1 and set2. Both sets contain user details but the data came from different databases. As a result the map keys do not line up. In set1 Susan is located under key f0b91a30. In set2 Susan is located under key 5dff2eef. The objects also do have an underlying id but they too are in different formats. In set1 each user can be identified through the id property. In set2 a similar property is located under identifier.userId but the ids are different so that an id in set1 + 100 equals the userId in set 2:
 
 ```
@@ -113,7 +116,7 @@ The result then simply has the commonIds in arrays.
   outerRight: [ 3 ]
 }
 ```
-## Using arrays
+## 3.2 Using arrays
 We can also use arrays, for example if the datasets look like this:
 ```
 let set1b = [
@@ -153,8 +156,7 @@ The result will be equal to that of demo #1.3:
   outerRight: [ 3 ]
 }
 ```
-
-## Using streams
+## 3.3 Using streams
 To synchronise streams ensure the streams meet these two requirements:
 - The stream is placed in objectMode
 - The objects in the stream are sorted by the commonId
@@ -169,7 +171,7 @@ console.log(await syncalot.sync({
 }).asMap()));
 ```
 
-## Receiving results through events
+## 3.4 Receiving results through events
 You can choose to not accumulate the results and instead have them be emitted as events, like so:
 ```
 let eventable = syncalot.sync({
@@ -189,7 +191,7 @@ eventable.on('inner', (idCommon, id1, item1, id2, item2) => {
 });
 await eventable.sync();
 ```
-## Receiving results through callbacks
+## 3.5 Receiving results through callbacks
 You can choose to not accumulate the results and instead have them be returned through callbacks, like so:
 ```
 await syncalot.sync({
