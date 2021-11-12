@@ -239,15 +239,19 @@ Syncalot tries to optimize for speed while conserving memory. While doing so the
 
 <a name ="#4.1"></a>
 ## 4.1 Preparation
+Before the sync starts syncalot determines if additional indexing is required to map based on the commonId.
+- Stream sets go into the actual sync unprocessed. The commonId is calculated on the fly.
+- Map sets with an undefined key go into the actual sync unaltered. The commonId is already present as the key.
+- For map sets with a specified key and for arrays a secondary temporary map is always generated that contains key/value pairs for commonId/items. This is a necessary performance hit in order to enable matching.
 
 <a name ="#4.2"></a>
 ## 4.2 Actual sync
+During the actual sync the keys in the provided maps are compared. This is done by iterating over set1 and validating that commonIds exist in set2. At the end of the iteration set2 is iterated to see if any commonIds in set2 do not exist in set1.
 
+If one of the sets is a stream, the stream is iterated and compared to the map of the other set. CommonIds from the stream are removed from the other set. Any remaining commonIds in set2 are then reported. In those cases where a secondary temporary map was created already, the items are removed from the secondary temporary map. For maps without a key a secondary temporary map is still made, so that items can be safely removed without affecting the original set.
+
+If both sets are a stream then they are parsed simultaneously. In every step of the process the stream with the lowest commonId for the current record is moved forward until the other stream has the lowest id. No temporary maps are generated other than during preparation.
 
 <a name ="#4.3"></a>
 ## 4.3 Results
-
-
-
-
-
+Syncalot's core outputs results through aggregators classes which are called for each outerLeft, outerRight or inner detection. The aggregators determine if data is returned in memory, forwarded as events or forwarded as callbacks. The asCallbacks() aggregator essentially only forwards those calls. This allows you to implement custom aggregators.
