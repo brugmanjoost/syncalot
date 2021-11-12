@@ -9,7 +9,7 @@ or in both.
 3.2 [Using arrays](#errors)
 3.3 [Using streams](#errors)
 3.4 [Receiving results through events](#errors)
-3.5 [Receiving results through callbacks](#api)<br />
+3.5 [Receiving results through callbacks](#api)
 
 
 ## 1. Installation
