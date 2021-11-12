@@ -28,20 +28,21 @@ You can find an extensive list of samples in /examples. Following is a subset of
 Consider the following scenario with two key/valyue maps set1 and set2. Both sets contain user details but the data came from different databases. As a result the map keys do not line up. In set1 Susan is located under key f0b91a30. In set2 Susan is located under key 5dff2eef. The objects also do have an underlying id but they too are in different formats. In set1 each user can be identified through the id property. In set2 a similar property is located under identifier.userId but the ids are different so that an id in set1 + 100 equals the userId in set 2:
 
 ```
-let set1 = {
+let set1a = {
     "4573cb2a": { id: 1, name: 'Johnny' },
     "f0b91a30": { id: 2, name: 'Susan' }
 }
-let set2 = {
+let set2a = {
     "5dff2eef": { identifer: { userId: 102 }, name: 'Susan Brooks' },
     "bf336645": { identifer: { userId: 103 }, name: 'Paola DeVoss' }
 }
 ```
 We synchronise these by passsing both sets into syncalot.sync(). Syncalot identifies them as maps and will consider the map keys (e.g. f0b91a30) the **id** for each item. We also pass in a key to retrieve the **commonId** for each item. The **commonId** in set1 is retrieved from the id property. The **commonId** in set2 is retrieved by calling a callback function for each item. In set2 the callback retrieves the userId and does some math to make it match with the commonId in set1. Syncalot then uses the **commonId** to match the two sets:
 ```
+// Demo #1.1
 console.log(await syncalot.sync({
-    set1: set1,
-    set2: set2,
+    set1: set1a,
+    set2: set2a,
     key1: 'id',
     key2: (id, item) => item.identifer.userId - 100
 }).asMap()));
@@ -53,8 +54,10 @@ We receive the result as a map, which provides the richest return dataset. In th
   outerLeft: { '1': { id1: '4573cb2a', item1: { id: 1, name: 'Johnny' } } },
   inner: {
     '2': {
-      id1: 'f0b91a30', item1: { id: 2, name: 'Susan' },
-      id2: '5dff2eef', item2: { identifer: { primaryKey: 102 }, name: 'Susan Brooks' }
+      id1: 'f0b91a30',
+      item1: { id: 2, name: 'Susan' },
+      id2: '5dff2eef',
+      item2: { identifer: { primaryKey: 102 }, name: 'Susan Brooks' }
     }
   },
   outerRight: { '3': { id2: 'bf336645', item2: { identifer: { primaryKey: 103 }, name: 'Paola DeVoss' } } }
@@ -62,9 +65,10 @@ We receive the result as a map, which provides the richest return dataset. In th
 ```
 If you don't care about the commonIds and you're just interested in the itemdata, you can also request the output as an array:
 ```
+// Demo #1.2
 console.log(await syncalot.sync({
-    set1: set1,
-    set2: set2,
+    set1: set1a,
+    set2: set2a,
     key1: 'id',
     key2: (id, item) => item.identifer.userId - 100
 }).asArray()));
@@ -86,9 +90,10 @@ The result then becomes arrays and the commonId is omitted:
 ```
 If however you're interested in commonIds only and no item data, you make that specification in asArray
 ```
+// Demo #1.3
 console.log(await syncalot.sync({
-    set1: set1,
-    set2: set2,
+    set1: set1a,
+    set2: set2a,
     key1: 'id',
     key2: (id, item) => item.identifer.userId - 100
 }).asArray({ commonIdsOnly: true })));
@@ -101,5 +106,43 @@ The result then simply has the commonIds in arrays.
   outerRight: [ 3 ]
 }
 ```
+## Using arrays
+We can also use arrays, for example if the datasets look like this:
+```
+let set1b = [
+    { id: 1, name: 'Johnny' },
+    { id: 2, name: 'Susan' }
+]
+let set2b = [
+    { identifer: { userId: 102 }, name: 'Susan Brooks' },
+    { identifer: { userId: 103 }, name: 'Paola DeVoss' }
+]
 
+// Demo #2.1
+console.log(await syncalot.sync({
+    set1: set1a,
+    set2: set2a,
+    key1: 'id',
+    key2: (id, item) => item.identifer.userId - 100
+}).asMap()));
+```
+We call syncalot in the exact samen way and the result will be identical as with demo #1.1. Another case may be where we have arrays of commonIds. Not specifying a key for an array will result syncalot to use the entry as the commonId.
 
+```
+let set1c = [ 1, 2 ]
+let set2c = [ 2, 3 ]
+
+// Demo #2.2
+console.log(await syncalot.sync({
+    set1: set1c,
+    set2: set2c,
+}).asArray({ commonIdsOnly: true })));
+```
+The result will be equal to that of demo #1.3:
+```
+{
+  outerLeft: [ 1 ],
+  inner: [ 2 ],
+  outerRight: [ 3 ]
+}
+```
