@@ -1,7 +1,22 @@
 {
     "name": "syncalot",
     "description": "Syncalot is a nodejs module used to synchronise datasets. Syncalot easily compares arrays, key/value maps and streams with eachother to identify items that exist in either side or in both. Syncalot has zero external dependencies.",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "author": "Joost Brugman",
-    "license": "MIT"
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/brugmanjoost/syncalot.git"
+    },
+    "keywords": [
+        "promise",
+        "async",
+        "streams",
+        "synchronize",
+        "synchronise",
+        "synchronization",
+        "synchronisation",
+        "synchronizer",
+        "synchroniser"
+    ]
 }
